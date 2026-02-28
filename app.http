@@ -5,7 +5,7 @@
 ## Profile
 ## ===========================================
 
-### Mengambil semua data tumbuhan
+### Mengambil semua data profil
 # @name GetProfile
 GET {{BaseUrl}}/profile
 Content-Type: application/json
@@ -23,11 +23,6 @@ Content-Type: application/json
 # @name GetAllPlants
 GET {{BaseUrl}}/plants?search=
 Content-Type: application/json
-
-#> {%
-#    client.global.set("plantId", response.body.data.plants[0].id);
-#    console.log(client.global.get("plantId"))
-#%}
 
 ### Menambahkan data tumbuhan baru
 # @name PostPlants
@@ -126,4 +121,84 @@ Content-Type: image/png
 ### Menghapus data plant berdasarkan id-nya
 # @name DeletePlant
 DELETE {{BaseUrl}}/plants/{{plantId}}
+Content-Type: application/json
+
+
+## Desserts (New Topic)
+## ===========================================
+
+### Mengambil semua data dessert
+# @name GetAllDesserts
+GET {{BaseUrl}}/desserts?search=
+Content-Type: application/json
+
+### Menambahkan menu dessert baru
+# @name PostDesserts
+POST {{BaseUrl}}/desserts
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="nama"
+
+Strawberry Cheesecake
+--WebAppBoundary
+Content-Disposition: form-data; name="deskripsi"
+
+Kue keju lembut dengan topping selai strawberry segar dan potongan buah.
+--WebAppBoundary
+Content-Disposition: form-data; name="bahanUtama"
+
+Cream Cheese, Graham Crackers, Selai Strawberry
+--WebAppBoundary
+Content-Disposition: form-data; name="kategori"
+
+Cold Desserts
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="dessert.png"
+Content-Type: image/png
+
+< ./dessert.png
+--WebAppBoundary--
+
+> {%
+    client.global.set("dessertId", response.body.data.dessertId);
+    console.log(client.global.get("dessertId"))
+%}
+
+### Mengambil data dessert berdasarkan id-nya
+# @name GetDessertById
+GET {{BaseUrl}}/desserts/{{dessertId}}
+Content-Type: application/json
+
+### Melihat gambar dessert
+# @name GetDessertImageById
+GET {{BaseUrl}}/desserts/{{dessertId}}/image
+Content-Type: application/json
+
+### Mengubah data dessert (Tanpa Gambar)
+# @name PutDessertOnlyData
+PUT {{BaseUrl}}/desserts/{{dessertId}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="nama"
+
+Strawberry Cheesecake Premium
+--WebAppBoundary
+Content-Disposition: form-data; name="deskripsi"
+
+Versi premium dengan keju pilihan dan strawberry organik.
+--WebAppBoundary
+Content-Disposition: form-data; name="bahanUtama"
+
+Premium Cream Cheese, Organic Strawberry
+--WebAppBoundary
+Content-Disposition: form-data; name="kategori"
+
+Cold Desserts
+--WebAppBoundary--
+
+### Menghapus data dessert berdasarkan id-nya
+# @name DeleteDessert
+DELETE {{BaseUrl}}/desserts/{{dessertId}}
 Content-Type: application/json
