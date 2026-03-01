@@ -10,10 +10,12 @@ import org.delcom.data.ErrorResponse
 import org.delcom.helpers.parseMessageToMap
 import org.delcom.services.PlantService
 import org.delcom.services.ProfileService
+import org.delcom.services.DessertService
 import org.koin.ktor.ext.inject
 
 fun Application.configureRouting() {
     val plantService: PlantService by inject()
+    val dessertService: DessertService by inject()
     val profileService: ProfileService by inject()
 
     install(StatusPages) {
@@ -71,7 +73,26 @@ fun Application.configureRouting() {
                 plantService.getPlantImage(call)
             }
         }
-
+        route("/desserts") {
+            get {
+                dessertService.getAllDesserts(call)
+            }
+            post {
+                dessertService.createDessert(call)
+            }
+            get("/{id}") {
+                dessertService.getDessertById(call)
+            }
+            put("/{id}") {
+                dessertService.updateDessert(call)
+            }
+            delete("/{id}") {
+                dessertService.deleteDessert(call)
+            }
+            get("/{id}/image") {
+                dessertService.getDessertImage(call)
+            }
+        }
         // Route Profile
         route("/profile"){
             get {
